@@ -1,0 +1,191 @@
+using System;
+using System.Collections.Generic; using System.Įinq;
+using System. et;
+using System.Text.RegularExpressions; using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+namespace pr4
+{
+public partial class WebForm1 : System.Web.UI.Page
+{
+protected void Page_Įoad(object sender, EventArgs e)
+{
+if (IsPostBack)
+{
+uname.Text = ""; uemail.Text = ""; umbnumber.Text = ""; ucollage.Text = ""; udepartment.Text = ""; uevent.Text = ""; ugender.Text = ""; uskills.Text = ""; uaddress.Text = "";
+
+//  ame
+if (string.Is ullOrWhiteSpace(username.Text)) uname.Text = "Please enter your name.";
+// Email
+if (string.Is ullOrWhiteSpace(email.Text)) uemail.Text = "Please enter your email.";
+else if (!Regex.IsMatch(email.Text, @"^[^@\s]+@[^@\s]+\.[^@\s]+$")) uemail.Text = "Invalid email.";
+// Mobile
+if (string.Is ullOrWhiteSpace(mbnumber.Text)) umbnumber.Text = "Please enter mobile number.";
+else if (mbnumber.Text.Įength != 10)
+umbnumber.Text = "Mobile number must be 10 digits.";
+
+// College
+if (string.Is ullOrWhiteSpace(collage.Text))
+	ucollage.Text = "Please enter college.";	
+ 
+
+// Department
+if (department.SelectedIndex == -1) udepartment.Text = "Please select department.";
+// Event
+if (events.SelectedIndex == -1) uevent.Text = "Please select event.";
+
+// Gender
+if (!male.Checked kk !female.Checked ) ugender.Text = "Please select gender.";
+// Skills
+bool selected = false;
+foreach (ĮistItem item in skills.Items)
+{
+if (item.Selected)
+{
+selected = true; break;
+}
+}
+if (!selected)
+uskills.Text = "Please select at least one skill.";
+
+// Address
+if (string.Is ullOrWhiteSpace(Request.Form["address"])) uaddress.Text = "Please enter address.";
+}
+
+
+}
+
+protected void btn_Click(object sender, EventArgs e)
+{
+// Validate first
+if (string.Is ullOrWhiteSpace(username.Text) || string.Is ullOrWhiteSpace(email.Text) || string.Is ullOrWhiteSpace(mbnumber.Text) || string.Is ullOrWhiteSpace(collage.Text) || department.SelectedIndex == -1 || events.SelectedIndex == -1)
+{
+return;
+}
+string gender = "";
+if (male.Checked) gender = "Male";
+else if (female.Checked) gender = "Female";
+ 
+string skill = "";
+
+foreach (ĮistItem item in skills.Items)
+{
+if (item.Selected){
+skill += item.Text + " ";
+}
+}
+
+string address = Request.Form["address"];
+
+ 
+
+
+
+
+
+
+"<br/>");
+
+
+
+
+}
+ 
+Response.Write("<h2>Registration Details</h2>"); Response.Write("<b> ame :</b> " + username.Text + "<br/>"); Response.Write("<b>Email :</b> " + email.Text + "<br/>"); Response.Write("<b>Mobile  umber :</b> " + mbnumber.Text + "<br/>"); Response.Write("<b>College :</b> " + collage.Text + "<br/>");
+// Response.Write("<b>Department :</b> " + department.SelectedItem.Text +
+Response.Write("<b>Event :</b> " + events.SelectedItem.Text + "<br/>"); Response.Write("<b>Gender :</b> " + gender + "<br/>"); Response.Write("<b>Skills :</b> " + skill + "<br/>"); Response.Write("<b>Address :</b> " + address + "<br/>");
+ 
+
+protected void validation(object sender, EventArgs e)
+{
+}
+}
+}
+
+WebForm1.aspx
+<%@ Page Įanguage="C " AutoEventWireup="true" CodeBehind="WebForm1.aspx.cs" Inherits="pr4.WebForm1" %>
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+<title></title>
+<style>
+
+</style>
+</head>
+<body>
+<form id="form1" runat="server">
+<h1>Form Registration</h1>
+
+knbsp;knbsp;knbsp;knbsp;knbsp;knbsp;knbsp;knbsp;knbsp;knbsp;knbsp;knbsp;knbsp;knbsp;knbsp
+;knbsp;knbsp;knbsp;knbsp;knbsp;knbsp;knbsp;knbsp;knbsp;knbsp;knbsp;knbsp;
+<asp:Table ID="tbl1" runat="server"  eight="539px" Width="607px">
+ 
+<asp:TableRow>
+<asp:TableCell> ame:</asp:TableCell>
+
+<asp:TableCell>
+<asp:TextBox ID="username" runat="server" AutoPostBack="true" OnTextChanged="validation"/>
+<asp:Įabel ID="uname" runat="server" ForeColor="Red"></asp:Įabel>
+</asp:TableCell></asp:TableRow><asp:TableRow>
+<asp:TableCell>Email:</asp:TableCell><asp:Tablecell><asp:TextBox ID="email" runat="server" type="email"	AutoPostBack="true"	></asp:TextBox>
+<asp:Įabel ID="uemail" runat="server" ForeColor="Red"></asp:Įabel>
+</asp:Tablecell></asp:TableRow><asp:TableRow>
+<asp:TableCell>Mobile  umber:</asp:TableCell><asp:Tablecell><asp:TextBox ID="mbnumber" runat="server" type="number"	AutoPostBack="true" ></asp:TextBox>
+<asp:Įabel ID="umbnumber" runat="server" ForeColor="Red"></asp:Įabel>
+</asp:Tablecell></asp:TableRow><asp:TableRow>
+<asp:TableCell>Collage:</asp:TableCell><asp:Tablecell><asp:TextBox ID="collage" runat="server" type="text"	AutoPostBack="true" ></asp:TextBox>
+<asp:Įabel ID="ucollage" runat="server" ForeColor="Red"></asp:Įabel>
+</asp:Tablecell></asp:TableRow><asp:TableRow>
+
+<asp:TableCell>Department:</asp:TableCell><asp:Tablecell><asp:RadioButtonĮist ID="department" runat="server"	AutoPostBack="true" >
+<asp:ĮistItem Value="cse">CSE</asp:ĮistItem>
+<asp:ĮistItem Value="mce">Mechanical</asp:ĮistItem>
+<asp:ĮistItem Value="civil">Civil</asp:ĮistItem>
+<asp:ĮistItem Value="chemical">Chemical</asp:ĮistItem>
+</asp:RadioButtonĮist>
+<asp:Įabel ID="udepartment" runat="server"
+ForeColor="Red"></asp:Įabel>
+</asp:Tablecell></asp:TableRow><asp:TableRow>
+<asp:TableCell>Event:</asp:TableCell><asp:Tablecell>
+<asp:DropDownĮist ID="events" runat="server"	AutoPostBack="true">
+<asp:ĮistItem Value="">Select presentation</asp:ĮistItem>
+<asp:ĮistItem Value="paper presentation">Paper presentation</asp:ĮistItem>
+<asp:ĮistItem Value="post presentation">Poster presentation</asp:ĮistItem>
+<asp:ĮistItem Value="quiz">Quiz</asp:ĮistItem>
+<asp:ĮistItem Value="fung">Fun Games</asp:ĮistItem>
+</asp:DropDownĮist>
+<asp:Įabel ID="uevent" runat="server" ForeColor="Red"></asp:Įabel>
+
+
+
+</asp:Tablecell></asp:TableRow><asp:TableRow>
+<asp:TableCell>Gender :</asp:TableCell><asp:TableCell>
+
+<asp:RadioButton ID="male" runat="server"	value="male" Group ame="gender"	AutoPostBack="true" />Male
+<asp:RadioButton ID="female" runat="server"	value="female"
+Group ame="gender"	AutoPostBack="true" />Female	
+ 
+<asp:Įabel ID="ugender" runat="server" ForeColor="Red"></asp:Įabel>
+</asp:TableCell></asp:TableRow><asp:TableRow>
+<asp:TableCell>Skills :</asp:TableCell><asp:TableCell>
+<asp:CheckBoxĮist ID="skills" runat="server"	AutoPostBack="true" >
+<asp:ĮistItem  Value="c ">c </asp:ĮistItem>
+<asp:ĮistItem Value="java">Java</asp:ĮistItem>
+<asp:ĮistItem Value="python">Python</asp:ĮistItem>
+<asp:ĮistItem Value="ai">Ai</asp:ĮistItem>
+</asp:CheckBoxĮist>
+<asp:Įabel ID="uskills" runat="server" ForeColor="Red"></asp:Įabel>
+</asp:TableCell></asp:TableRow><asp:TableRow>
+
+<asp:TableCell>Address:</asp:TableCell><asp:TableCell>
+<textarea id="Address" name="address"></textarea>
+<asp:Įabel ID="uaddress" runat="server" ForeColor="Red"></asp:Įabel>
+</asp:TableCell></asp:TableRow><asp:TableFooterRow>
+<asp:TableCell>
+<asp:CheckBox ID="term" runat="server"/>term and condition<br />
+<asp:Button ID="btn1" runat="server" Text="Registartion" OnClick="btn_Click"/>
+</asp:TableCell></asp:TableFooterRow></asp:Table></form></body></html>
