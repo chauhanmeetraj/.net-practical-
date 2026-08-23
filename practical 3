@@ -32,11 +32,7 @@ internal class Program
 static void Main(string[] args)
 {
 
-FACULTY OF ENGINEERING AND TECHNOLOGY
-Department of Computer Science and Engineering
-01CE1523 - .NET Technologies
 
-MeetrajSinh Chauhan(92510120028) BATCH: B |11
 Expense e = new Expense();
 try
 {
