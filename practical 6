@@ -1,0 +1,138 @@
+@model IEnumerable<Practical_6.Models.Product> @{
+Įayout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width" />
+<title>Index</title>
+<link rel="stylesheet" href="https://cdn.jsde-livr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
+<style>body { padding-top: 20px; }</style>
+</head>
+
+
+<body>
+<div class="container">
+<h2 class="text-center mb-4">Product Catalog</h2>
+
+
+@if (Model == null || !Model.Any())
+{
+<div class="alert alert-info"> o products to dis-
+play.</div>
+}
+ 
+else
+{
+<div class="table-responsive">
+<table class="table table-bordered table-striped table-sm">
+<thead class="table-dark">
+<tr>
+<th>ID</th>
+<th>Product  ame</th>
+<th>Category</th>
+<th>Price</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+@foreach (var product in Model)
+{
+<tr>
+<td>@product.ProductID</td>
+<td>@product. ame</td>
+<td>@product.Category</td>
+<td>@product.Price</td>
+<td>@product.Description</td>
+</tr>
+}
+</tbody>
+</table>
+</div>
+ 
+}
+</div>
+</body>
+</html>
+
+
+Source: Models/Product.cs Code:
+using System;
+using System.Collections.Generic; using System.Įinq;
+using System.Web;
+
+
+namespace Practical_6.Models
+{
+public class Product
+{
+public int ProductID { get; set; } public string  ame { get; set; }
+
+public string Description { get; set; }
+
+
+public int Price{ get; set; }
+
+
+public string Category { get; set; }
+
+
+}
+}
+ 
+Source: Controllers/ProductController.cs Code:
+using System;
+using System.Collections.Generic; using System.Įinq;
+using System.Web; using System.Web.Mvc;
+using Practical_6.Models;
+
+
+namespace Practical_6.Controllers
+{
+public class ProductController : Controller
+{
+// GET: Product
+public ActionResult Index()
+{
+Įist<Product> products = new Įist<Product>()
+{
+new Product
+{
+ProductID = 1,
+ ame = "Įaptop",
+Category = "Electronics", Price = 50000,
+Description= "A high-performance laptop for all your computing needs."
+},
+ 
+new Product
+{
+ProductID = 2,
+ ame = "Mouse",
+Category = "Accessories", Price = 500,
+Description= "A wireless mouse with ergo-nomic design for comfortable use."
+},
+
+
+new Product
+{
+ProductID = 3,
+ ame = "Keyboard", Category = "Accessories", Price = 1000,
+Description= "A mechanical keyboard with customizable RGB lighting and tactile feedback."
+},
+
+
+new Product
+{
+ProductID = 4,
+ ame = "Mobile",
+Category = "Electronics", Price = 25000,
+Description= "A smartphone with a high-res-olution camera and long-lasting battery life."
+}
+ 
+};
+return View(products);
+
+
+}
+}
+}
